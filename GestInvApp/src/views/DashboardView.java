@@ -14,6 +14,7 @@ import controllers.DashboardController;
 import javax.swing.JFrame;
 import controllers.ProductsController;
 import controllers.VentasController;
+import controllers.ComprasController;
 import javax.swing.JOptionPane;
 
 
@@ -93,7 +94,7 @@ public class DashboardView extends javax.swing.JFrame {
                 btnVentasActionPerformed(evt);
             }
         });
-        jPanel1.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 259, 50));
+        jPanel1.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 259, 50));
 
         materialButton2.setBackground(new java.awt.Color(102, 153, 255));
         materialButton2.setText("COMPRAS");
@@ -103,7 +104,7 @@ public class DashboardView extends javax.swing.JFrame {
                 materialButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(materialButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 259, 50));
+        jPanel1.add(materialButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 259, 50));
 
         BtnProduct.setBackground(new java.awt.Color(102, 153, 255));
         BtnProduct.setText("PRODUCTOS");
@@ -113,7 +114,7 @@ public class DashboardView extends javax.swing.JFrame {
                 BtnProductActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 259, 50));
+        jPanel1.add(BtnProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 230, 259, 50));
 
         materialButton4.setBackground(new java.awt.Color(102, 153, 255));
         materialButton4.setText("PROVEEDORES");
@@ -125,7 +126,7 @@ public class DashboardView extends javax.swing.JFrame {
                 materialButton4ActionPerformed(evt);
             }
         });
-        jPanel1.add(materialButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 259, 51));
+        jPanel1.add(materialButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 259, 51));
 
         materialButton5.setBackground(new java.awt.Color(102, 153, 255));
         materialButton5.setText("CLIENTES");
@@ -134,7 +135,7 @@ public class DashboardView extends javax.swing.JFrame {
                 materialButton5ActionPerformed(evt);
             }
         });
-        jPanel1.add(materialButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 259, 57));
+        jPanel1.add(materialButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 280, 259, 57));
 
         materialButton6.setBackground(new java.awt.Color(102, 153, 255));
         materialButton6.setText("USUARIOS");
@@ -144,7 +145,7 @@ public class DashboardView extends javax.swing.JFrame {
                 materialButton6ActionPerformed(evt);
             }
         });
-        jPanel1.add(materialButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 259, 54));
+        jPanel1.add(materialButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 340, 259, 54));
 
         sesionActual.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
         sesionActual.setText(dp.getFechaActual());
@@ -175,13 +176,16 @@ public class DashboardView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 12, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -236,11 +240,8 @@ public class DashboardView extends javax.swing.JFrame {
 
     private void materialButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton2ActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(
-                        this,
-                        this.mensajeModulos,
-                        "Advertencia", JOptionPane.INFORMATION_MESSAGE,
-                        dp.getChafLogo());
+        ComprasController comprasControl = new ComprasController();
+        comprasControl.showComprasView();
     }//GEN-LAST:event_materialButton2ActionPerformed
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed

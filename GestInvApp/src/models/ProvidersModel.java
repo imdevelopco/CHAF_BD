@@ -270,5 +270,36 @@ public class ProvidersModel {
             try{ if(conexion != null) conexion.close(); }catch(Exception e){ System.out.println("[ProviderModel] Error: no se pudo liberar la conexión:"+e); }
         }
     }
+    
+    public ArrayList<ArrayList> getProviderWhere(String name){
+      ArrayList<ArrayList> proveedores = new ArrayList<ArrayList>();
+      Connection con = null;
+      try{
+        ConexionBD conexion = new ConexionBD();
+        con = conexion.getBasicDataSource().getConnection();
+        PreparedStatement query = con.prepareStatement("SELECT t.* FROM tercero AS t INNER JOIN proveedor ON t.tercero_id = proveedor.tercero_id WHERE proveedor.estado = true AND LOWER(t.nombre_tercero) LIKE LOWER(?)");
+        System.out.println("[DEBUG] antes del setString, name="+name);
+        query.setString(1,  "%" + name + "%");
+        System.out.println("[DEBUG] despues del setString");
+        ResultSet result = query.executeQuery();
+        while(result.next()){
+          ArrayList<String> proveedor = new ArrayList<String>();
+          proveedor.add(result.getString(1));
+          proveedor.add(result.getString(2));
+          proveedor.add(result.getString(3));
+          proveedor.add(result.getString(4));
+          proveedor.add(result.getString(5));
+          proveedor.add(result.getString(6));
+          proveedores.add(proveedor);
+        }
+      }
+      catch(SQLException ex){
+        Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      finally{
+        try{ if(con != null) con.close(); }catch(Exception e){ System.out.println("[ProviderModel] Error: no fue posible liberar la conexión "+e); }
+      }
+      return proveedores;
+    }
 
 }
