@@ -22,7 +22,7 @@ public class ConexionBD {
      basicDataSource.setDriverClassName("org.postgresql.Driver");
      basicDataSource.setUsername("chaf");
      basicDataSource.setPassword("Cali20*Q");
-     basicDataSource.setUrl("jdbc:postgresql://chaf-pruebas.cjbpeuvptazq.us-east-2.rds.amazonaws.com:5432/CHAF_PRUEBA");
+     basicDataSource.setUrl("jdbc:postgresql://chaf-pruebas.cjbpeuvptazq.us-east-2.rds.amazonaws.com:5432/CHAF_BASES_DE_DATOS");
      System.out.println("[ConexionDB] "+basicDataSource);
      dataSource = basicDataSource;
     }
