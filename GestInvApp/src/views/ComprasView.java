@@ -60,11 +60,6 @@ public class ComprasView extends javax.swing.JFrame {
       this.setIdProvider(data.get(1));
       this.setDirProvider(data.get(2));
       this.setTelProvider  (data.get(4));
-      
-      System.out.println(this.idProvider);
-      System.out.println(data.get(1));
-      System.out.println(data.get(2));
-      System.out.println(data.get(4));
       this.refresh();
     }
 
