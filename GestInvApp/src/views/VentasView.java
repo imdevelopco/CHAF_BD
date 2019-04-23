@@ -8,6 +8,8 @@ package views;
 import controllers.CustomersController;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,6 +19,7 @@ public class VentasView extends javax.swing.JFrame {
 
     private CHAFDependenciesViews dp = new CHAFDependenciesViews();
     private int idClient;
+    private int deleteRow;
 
     /**
      * Creates new form VentasView
@@ -51,6 +54,19 @@ public class VentasView extends javax.swing.JFrame {
       System.out.println("[DEBUG] recibi id:"+id);
     }
 
+    
+    public void addNewProduct(ArrayList<String> producto){
+        DefaultTableModel model = (DefaultTableModel) this.productosEnVenta.getModel();
+        
+        model.addRow(new Object[]{producto.get(0),
+                                  producto.get(1),
+                                  producto.get(2),
+                                  producto.get(3),
+                                  producto.get(4),
+                                  producto.get(5)
+                                  });
+    }
+
     public void setInfoCLient(){
       CustomersController ctrlCustomers = new CustomersController();
       ArrayList<String> data = ctrlCustomers.showRegisterCustomer(this.idClient);
@@ -83,6 +99,10 @@ public class VentasView extends javax.swing.JFrame {
         materialButton1 = new libraries.MaterialButton();
         jPanel2 = new javax.swing.JPanel();
         materialButton2 = new libraries.MaterialButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        productosEnVenta = new javax.swing.JTable();
+        btnEliminarProducto = new libraries.MaterialButton();
+        btnFinalVentas = new libraries.MaterialButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ventas");
@@ -174,6 +194,21 @@ public class VentasView extends javax.swing.JFrame {
             }
         });
 
+        productosEnVenta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id","Nombre","precio venta","marca", "proveedor","cantidad"
+            }
+        ));
+        productosEnVenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                productosEnVentaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(productosEnVenta);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -182,29 +217,64 @@ public class VentasView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(materialButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(materialButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(367, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(97, Short.MAX_VALUE))
         );
+
+        btnEliminarProducto.setBackground(new java.awt.Color(119, 177, 236));
+        btnEliminarProducto.setText("ELIMINAR PRODUCTO");
+        btnEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarProductoActionPerformed(evt);
+            }
+        });
+
+        btnFinalVentas.setBackground(new java.awt.Color(119, 177, 236));
+        btnFinalVentas.setText("Finalizar Venta");
+        btnFinalVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalVentasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnFinalVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnFinalVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -220,8 +290,28 @@ public class VentasView extends javax.swing.JFrame {
     private void addProduct(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProduct
         // TODO add your handling code here:
         VentasChoseProduct viewChoseProduct = new VentasChoseProduct();
+        viewChoseProduct.SetVentasView(this);
 
     }//GEN-LAST:event_addProduct
+
+    private void btnEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProductoActionPerformed
+        // TODO add your handling code here:
+        if(deleteRow < 0){
+            
+        }else{
+            DefaultTableModel model = (DefaultTableModel) this.productosEnVenta.getModel();
+            model.removeRow(deleteRow);
+        }
+    }//GEN-LAST:event_btnEliminarProductoActionPerformed
+
+    private void productosEnVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productosEnVentaMouseClicked
+        // TODO add your handling code here:
+        deleteRow = this.productosEnVenta.getSelectedRow();    
+    }//GEN-LAST:event_productosEnVentaMouseClicked
+
+    private void btnFinalVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalVentasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFinalVentasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,6 +351,8 @@ public class VentasView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IdentificacionCliente;
     private javax.swing.JLabel NombreCliente;
+    private libraries.MaterialButton btnEliminarProducto;
+    private libraries.MaterialButton btnFinalVentas;
     private javax.swing.JLabel direccionCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
@@ -268,8 +360,10 @@ public class VentasView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private libraries.MaterialButton materialButton1;
     private libraries.MaterialButton materialButton2;
+    private javax.swing.JTable productosEnVenta;
     private javax.swing.JLabel telefonoCliente;
     // End of variables declaration//GEN-END:variables
 }

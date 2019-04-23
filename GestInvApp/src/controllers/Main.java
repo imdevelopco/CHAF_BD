@@ -7,15 +7,19 @@ package controllers;
 
 import javax.swing.JFrame;
 import views.Login;
+import views.VentasView;
 /**
  *
  * @author camilo
  */
 public class Main {
     public static void main(String[] args){
-          Login login = new Login();
-          login.setVisible(true);
-          login.setLayout(null);
-          login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+//          Login login = new Login();
+//          login.setVisible(true);
+//          login.setLayout(null);
+//          login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+            VentasView vv = new VentasView();
+            vv.setVisible(true);
+            vv.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
     }       
 }

@@ -5,9 +5,14 @@
  */
 package views;
 
-import controllers.ProductsController;
+
+import controllers.VentasController;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import libraries.TextPrompt;
 
 /**
  *
@@ -16,7 +21,14 @@ import java.awt.Toolkit;
 public class VentasChoseProduct extends javax.swing.JFrame {
 
     private String input;
-    private ProductsController producto;
+    private VentasController ventas;
+    private ArrayList<ArrayList> productos;
+    private int cantidad;
+    private String nombre,precioVenta,marca,proveedor;
+    private CHAFDependenciesViews dp = new CHAFDependenciesViews();
+    private Object id = null;
+    private VentasView ventasView;
+    private TextPrompt cantidadIngresada,nameProducto;
 
     /**
      * Creates new form VentasChoseProduct
@@ -32,6 +44,50 @@ public class VentasChoseProduct extends javax.swing.JFrame {
 
       initComponents();
     }
+     public void setModelTable(Object[][] tabla){
+      DefaultTableModel model = new DefaultTableModel(
+        tabla,
+        new String[]{
+          "Id","Nombre","precio venta","marca", "proveedor","cantidad"
+        }
+      ){
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,java.lang.Object.class,java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false,false,false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        };
+
+      jTable1.setModel(model);
+    }
+      public void SetVentasView(VentasView ventas){
+          this.ventasView = ventas;
+      }
+    
+        public void setProductsTable(ArrayList<ArrayList> productos){
+            this.productos = productos;
+            Object[][] tabla = new Object[productos.size()][6];
+            int j = 0;
+            for (int i = 0; i < productos.size() ; i++ ) {
+              tabla[j][0] = productos.get(i).get(0).toString();
+              tabla[j][1] = productos.get(i).get(1).toString();
+              tabla[j][2] = productos.get(i).get(2).toString();
+              tabla[j][3] = productos.get(i).get(3).toString();
+              tabla[j][4] = productos.get(i).get(4).toString();
+              tabla[j][5] = productos.get(i).get(5).toString();
+              j++;
+            }
+            this.setModelTable(tabla);
+         }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,12 +106,13 @@ public class VentasChoseProduct extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         input2 = new views.Input();
-        jTextField2 = new javax.swing.JTextField();
+        inputCantidad = new javax.swing.JTextField();
         materialButton1 = new libraries.MaterialButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         nombreProducto.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        nameProducto = new TextPrompt("Nombre del Producto",this.nombreProducto);
         nombreProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nombreProductohandlerInput(evt);
@@ -108,14 +165,19 @@ public class VentasChoseProduct extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        jTextField2.setText("Cantidad");
-        jTextField2.setToolTipText("");
-        jTextField2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        inputCantidad.setToolTipText("");
+        cantidadIngresada = new TextPrompt("cantidad",this.inputCantidad);
+        inputCantidad.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        inputCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                inputCantidadActionPerformed(evt);
             }
         });
 
@@ -125,18 +187,23 @@ public class VentasChoseProduct extends javax.swing.JFrame {
             input2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(input2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField2)
+                .addComponent(inputCantidad)
                 .addContainerGap())
         );
         input2Layout.setVerticalGroup(
             input2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(input2Layout.createSequentialGroup()
-                .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                .addComponent(inputCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         materialButton1.setBackground(new java.awt.Color(119, 177, 236));
         materialButton1.setText("Agregar Producto");
+        materialButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                materialButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -204,9 +271,9 @@ public class VentasChoseProduct extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void inputCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputCantidadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_inputCantidadActionPerformed
 
     private void nombreProductohandlerInput(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreProductohandlerInput
         // TODO add your handling code here:
@@ -214,10 +281,44 @@ public class VentasChoseProduct extends javax.swing.JFrame {
 
     private void nombreProductokeyTypedEvent(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreProductokeyTypedEvent
         // TODO add your handling code here:
-//        input = nombreCliente.getText();
-//        if(producto == null) producto = new ProductsController();
-//        this.setClientsTable(producto.(input));
+        input = nombreProducto.getText();
+        if(ventas == null) ventas = new VentasController();
+        this.setProductsTable(ventas.getProductWhereName(input));
     }//GEN-LAST:event_nombreProductokeyTypedEvent
+
+    private void materialButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton1ActionPerformed
+        // TODO add your handling code here:
+       
+          if(id == null || this.inputCantidad.getText().length() == 0 || cantidad < 0){
+          JOptionPane.showMessageDialog(
+                          this,
+                          "No ha seleccionado un producto o la cantidad diferente a la disponible",
+                          "Advertencia", JOptionPane.INFORMATION_MESSAGE,
+                          dp.getChafLogo());
+            }
+            else{
+                  cantidad = Integer.parseInt(this.inputCantidad.getText());
+                  ArrayList <String> producto = new  ArrayList <String>();
+                  producto.add(this.id.toString());                  
+                  producto.add(this.nombre);                  
+                  producto.add(this.precioVenta);                  
+                  producto.add(this.marca);                  
+                  producto.add(this.proveedor);                  
+                  producto.add(String.valueOf(this.cantidad));
+                  this.ventasView.addNewProduct(producto);
+          }
+    }//GEN-LAST:event_materialButton1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int row = jTable1.getSelectedRow();
+        id = jTable1.getModel().getValueAt(row, 0);
+        this.nombre = jTable1.getModel().getValueAt(row, 1).toString();
+        this.precioVenta = jTable1.getModel().getValueAt(row, 2).toString();
+        this.marca = jTable1.getModel().getValueAt(row, 3).toString();
+        this.proveedor = jTable1.getModel().getValueAt(row, 4).toString();
+        cantidad = Integer.parseInt(jTable1.getModel().getValueAt(row, 5).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -259,11 +360,11 @@ public class VentasChoseProduct extends javax.swing.JFrame {
     private views.Input input2;
     private views.Input input3;
     private views.Input input4;
+    private javax.swing.JTextField inputCantidad;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField2;
     private libraries.MaterialButton materialButton1;
     private javax.swing.JTextField nombreCliente;
     private javax.swing.JTextField nombreProducto;
