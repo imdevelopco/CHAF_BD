@@ -69,7 +69,6 @@ public class DashboardView extends javax.swing.JFrame {
         materialButton4 = new libraries.MaterialButton();
         materialButton5 = new libraries.MaterialButton();
         materialButton6 = new libraries.MaterialButton();
-        materialButton7 = new libraries.MaterialButton();
         sesionActual = new javax.swing.JLabel();
         rolSesionActual = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -97,7 +96,7 @@ public class DashboardView extends javax.swing.JFrame {
         jPanel1.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 259, 50));
 
         materialButton2.setBackground(new java.awt.Color(102, 153, 255));
-        materialButton2.setText("COTIZACIONES");
+        materialButton2.setText("COMPRAS");
         materialButton2.setPreferredSize(new java.awt.Dimension(96, 25));
         materialButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,18 +146,6 @@ public class DashboardView extends javax.swing.JFrame {
         });
         jPanel1.add(materialButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 259, 54));
 
-        materialButton7.setBackground(new java.awt.Color(102, 153, 255));
-        materialButton7.setText("REPORTE");
-        materialButton7.setMaximumSize(new java.awt.Dimension(96, 25));
-        materialButton7.setMinimumSize(new java.awt.Dimension(96, 25));
-        materialButton7.setPreferredSize(new java.awt.Dimension(96, 25));
-        materialButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                materialButton7ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(materialButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 259, 50));
-
         sesionActual.setFont(new java.awt.Font("Roboto Condensed", 0, 14)); // NOI18N
         sesionActual.setText(dp.getFechaActual());
         jPanel1.add(sesionActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, 20));
@@ -203,15 +190,6 @@ public class DashboardView extends javax.swing.JFrame {
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel1MouseClicked
-
-    private void materialButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton7ActionPerformed
-        // TODO add your handling code here:
-       JOptionPane.showMessageDialog(
-                        this,
-                        this.mensajeModulos,
-                        "Advertencia", JOptionPane.INFORMATION_MESSAGE,
-                        dp.getChafLogo());
-    }//GEN-LAST:event_materialButton7ActionPerformed
 
     private void materialButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialButton6ActionPerformed
         // TODO add your handling code here:
@@ -317,16 +295,15 @@ public class DashboardView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private libraries.MaterialButton BtnProduct;
+    private libraries.MaterialButton btnVentas;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private libraries.MaterialButton btnVentas;
     private libraries.MaterialButton materialButton2;
     private libraries.MaterialButton materialButton4;
     private libraries.MaterialButton materialButton5;
     private libraries.MaterialButton materialButton6;
-    private libraries.MaterialButton materialButton7;
     private javax.swing.JLabel rolSesionActual;
     private javax.swing.JLabel sesionActual;
     // End of variables declaration//GEN-END:variables
